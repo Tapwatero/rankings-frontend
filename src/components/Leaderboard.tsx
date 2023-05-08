@@ -1,85 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import axios, {AxiosResponse} from "axios";
-import {ClipLoader} from "react-spinners";
-import FlipMove from "react-flip-move";
+import React, {Fragment} from "react";
 
+interface LeaderboardProps {
+    leaderboard: string[][];
+}
 
-function Leaderboard(): JSX.Element {
-    const [totalVotes, setTotalVotes] = useState<string>("0");
-    const [leaderboard, setLeaderboard] = useState<string[][]>([[""]]);
-    const [loading, setLoading] = useState<boolean>(true);
-
-
-    const fetchLeaderboard = () => {
-        axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
-            setTotalVotes(response.data[0][0])
-            setLeaderboard(response.data.slice(1))
-            setTimeout(() => {
-                setLoading(false);
-            }, 325);
-        });
-    }
-
-    useEffect(() => {
-        if (loading) {
-            fetchLeaderboard();
-        }
-    }, [loading, leaderboard]);
-
-
-
-    useEffect(() => {
-
-        setInterval(() => {
-            fetchLeaderboard();
-        }, 2500);
-
-    }, []);
+function Leaderboard(props: LeaderboardProps): JSX.Element {
 
     const decorators: { [index: number]: string } = {
-        0: "bg-[conic-gradient(at_bottom_right,_var(--tw-gradient-stops))] from-orange-500 to-yellow-300",
+        0: "bg-gradient-to-r from-yellow-400 to-amber-400",
         1: "bg-gradient-to-r from-gray-300 to-gray-400",
-        2: "bg-gradient-to-r from-orange-300 to-amber-400"
+        2: "bg-gradient-to-r from-orange-300 to-amber-500"
     }
 
-    const list = leaderboard.map((leaderboardPosition: string[], index: number) =>
-        <tr className={`${index <= 2 ? decorators[index] + " text-xl text-white" : "text-gray-800 md:text-xl text-md"} drop-shadow-md hover:drop-shadow-lg drop-shadow-black/25 p-5 border-none cursor-pointer duration-300 min-h-4 rounded-md bg-white w-full grid grid-cols-3 justify-center items-center flex`}>
-            <td key={index}
-                className={"font-['Arial'] text-center opacity-95 select-none duration-200 text-center"}>{index + 1}</td>
-            <td key={leaderboardPosition[0]}
-                className={`${index <= 2 ? "opacity-100": ""}  w-full fex justify-center items-center font-['Arial'] text-center opacity-95 select-none duration-200`}>{leaderboardPosition[0]}
-            </td>
-            <td key={leaderboardPosition[1]}
-                className={"font-['Arial'] text-center select-none duration-200 "}>{leaderboardPosition[1]}</td>
-        </tr>
-    );
-
+    let data = props.leaderboard.map((leaderboardPosition: string[], index: number) =>
+        <Fragment>
+            <h1 className={"flex items-center justify-center text-xs"}>{index+1}</h1>
+            <h1 className={"flex items-center justify-center text-xs"}>{leaderboardPosition[0]}</h1>
+            <h1 className={"flex items-center justify-center text-xs"}>{leaderboardPosition[1]}</h1>
+        </Fragment>
+)
 
     return (
-        <div className={"h-screen overflow-scroll bg-slate-100"}>
-            <div className={"flex justify-center items-center w-screen"}>
-                {
-                    !loading ? (
-                        <div
-                            className={"overflow-y-scroll scrollbar-hide w-full md:w-9/12 lg:w-7/12 p-4 flex flex-col justify-center items-center rounded-3xl"}>
-                                <tr className={"p-3 border-none duration-300 rounded-md w-full grid grid-cols-3 justify-center items-center flex"}>
-                                    <th className={"font-['Proxima_Nova'] font-medium text-center opacity-95 select-none duration-200 text-center text-md md:text-xl"}>{"Ranking"}</th>
-                                    <th className={"font-['Proxima_Nova'] font-medium text-center opacity-95 select-none duration-200 text-gray-800 text-md md:text-xl"}>{"Name"}</th>
-                                    <th className={"font-['Proxima_Nova'] font-medium text-center opacity-95 select-none duration-200 text-gray-800 text-md md:text-xl"}>{`Votes (${totalVotes})`}</th>
-                                </tr>
-                                <FlipMove className={"grid w-full border-y-white grid-rows-3 gap-y-4"}>{list}</FlipMove>
-                        </div>
-                    ) : (
-                        <div className={"h-screen w-screen flex justify-center items-center"}>
-                            <ClipLoader color={"#6495ED"} size={200}></ClipLoader>
-                        </div>
-                    )
-                }
-
-            </div>
+        <div className={"border-slate-400 border-2 / divide-y divide-x divide-slate-500 w-full h-full text-center grid grid-rows-10 grid-cols-3 bg-slate-700 text-white text-3xl font-['Proxima_Nova']"}>
+            {data}
         </div>
-
     )
+
 }
+
 
 export default Leaderboard;

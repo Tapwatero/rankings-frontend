@@ -67,8 +67,10 @@ function Vote(): JSX.Element {
         ) : (
             <div className={"flex flex-col h-screen w-screen justify-center items-center"}>
                 <VoteHeader></VoteHeader>
-                <div className={"flex flex-col lg:flex-row items-center w-screen h-screen cursor-pointer duration-700"}>
-                    <VoteOption id={0} handleVote={handleVote} matchup={matchup} colour={"bg-rose-500"}></VoteOption>
+                <div
+                    className={"flex flex-col lg:flex-row items-center w-screen h-screen cursor-pointer duration-700"}>
+                    <VoteOption id={0} handleVote={handleVote} matchup={matchup}
+                                colour={"bg-rose-500"}></VoteOption>
                     <SkipButton handleSkip={handleSkip}></SkipButton>
                     <VoteOption id={1} handleVote={handleVote} matchup={matchup} colour={"bg-sky-500"}></VoteOption>
                 </div>
