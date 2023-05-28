@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import axios, {AxiosResponse} from "axios";
 import {ClipLoader} from "react-spinners";
 import Leaderboard from "./Leaderboard";
+import DailyGraph from "./DailyGraph";
 
 
 function Analytics(): JSX.Element {
-    const [totalVotes, setTotalVotes] = useState<string>("0");
+    const [_, setTotalVotes] = useState<string>("0");
     const [leaderboard, setLeaderboard] = useState<string[][]>([[""]]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -19,6 +20,7 @@ function Analytics(): JSX.Element {
             }, 325);
         });
     }
+
 
     useEffect(() => {
         if (loading) {
@@ -50,18 +52,11 @@ function Analytics(): JSX.Element {
                     <Leaderboard leaderboard={leaderboard}></Leaderboard>
 
                     <div
-                        className={"p-4 bg-slate-600 h-full w-full flex justify-center items-center flex-col gap-y-16"}>
+                        className={"p-4 bg-slate-600 h-full w-full flex justify-center items-center flex-col gap-y-4"}>
 
 
-                        <div
-                            className={"bg-sky-500 p-16 rounded-lg flex justify-center items-center - text-center text-white text-3xl font-['Proxima_Nova']"}>Graph
-                            Daily
-                        </div>
-
-                        <div
-                            className={"bg-sky-500 p-16 rounded-lg flex justify-center items-center - text-center text-white text-3xl font-['Proxima_Nova']"}>Graph
-                            Weekly
-                        </div>
+                        <DailyGraph></DailyGraph>
+                        <DailyGraph></DailyGraph>
 
                     </div>
                 </div>

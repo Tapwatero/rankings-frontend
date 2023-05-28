@@ -8,7 +8,7 @@ function VotePrompt() {
         <Link to={"/analytics"} className={"p-3"}>
             <TypeAnimation
                 sequence={[
-                    'Current Vote - Funniest Person',
+                    'Current Vote - Best Rizz',
                     1000,
                 ]}
                 speed={25}

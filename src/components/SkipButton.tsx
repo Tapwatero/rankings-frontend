@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ArrowClockwise, ExclamationOctagon, Stopwatch} from "react-bootstrap-icons";
 
 interface SkipButtonProps {
@@ -9,10 +9,15 @@ function SkipButton(props: SkipButtonProps) {
     const [isSkipping, setSkipping] = useState<boolean>(false);
     const [isCooldownActive, setCooldownActive] = useState<boolean>(false);
 
+    useEffect(() => {
+       console.log(isSkipping);
+    });
+
     const handleClick = () => {
         if (isSkipping || isCooldownActive) {
             return;
         }
+
 
         setSkipping(true);
 
@@ -37,9 +42,8 @@ function SkipButton(props: SkipButtonProps) {
                                fill={"white"} size={"40"}></ExclamationOctagon>
                 ) : (
                     <ArrowClockwise
-                        className={`animate-better-fade-in ease-in-out ${isSkipping ? 'animate-spin-fast' : ''}`}
-                        fill={"white"} size={"40"}></ArrowClockwise>
-                )
+                        className={`ease-in-out ${isSkipping ? ' animate-better-spin' : 'animate-better-fade-in'}`}
+                        fill={"white"} size={"40"}></ArrowClockwise>)
                 }
             </div>
         </div>
