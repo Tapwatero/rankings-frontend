@@ -6,20 +6,10 @@ import DailyGraph from "./DailyGraph";
 
 
 function Analytics(): JSX.Element {
-    const [_, setTotalVotes] = useState<string>("0");
+    const [totalVotes, setTotalVotes] = useState<string>("0");
     const [leaderboard, setLeaderboard] = useState<string[][]>([[""]]);
     const [loading, setLoading] = useState<boolean>(true);
 
-
-    const fetchLeaderboard = () => {
-        axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
-            setTotalVotes(response.data[0][0])
-            setLeaderboard(response.data.slice(1))
-            setTimeout(() => {
-                setLoading(false);
-            }, 325);
-        });
-    }
 
 
     useEffect(() => {
@@ -27,6 +17,20 @@ function Analytics(): JSX.Element {
             fetchLeaderboard();
         }
     }, [loading, leaderboard]);
+
+    const fetchLeaderboard = () => {
+        axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
+            setTotalVotes(response.data[0][0])
+            setLeaderboard(response.data.slice(1))
+            setTimeout(() => {
+                console.log(totalVotes);
+                setLoading(false);
+            }, 325);
+        });
+    }
+
+
+
 
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 
 interface LeaderboardProps {
     leaderboard: string[][];
@@ -6,11 +6,11 @@ interface LeaderboardProps {
 
 function Leaderboard(props: LeaderboardProps): JSX.Element {
 
-    const decorators: { [index: number]: string } = {
-        0: "bg-gradient-to-r from-yellow-400 to-amber-400",
-        1: "bg-gradient-to-r from-gray-300 to-gray-400",
-        2: "bg-gradient-to-r from-orange-300 to-amber-500"
-    }
+    // const decorators: { [index: number]: string } = {
+    //     0: "bg-gradient-to-r from-yellow-400 to-amber-400",
+    //     1: "bg-gradient-to-r from-gray-300 to-gray-400",
+    //     2: "bg-gradient-to-r from-orange-300 to-amber-500"
+    // }
 
     let data = props.leaderboard.map((leaderboardPosition: string[], index: number) =>
         <div key={index} className={`hover:bg-slate-600 grid grid-cols-3 duration-300`}>

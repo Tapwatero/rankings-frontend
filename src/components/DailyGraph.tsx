@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Area, AreaChart, ResponsiveContainer, Tooltip, YAxis} from "recharts";
 import CustomTooltip from "./CustomTooltip";
 import axios, {AxiosResponse} from "axios";
 
