@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios, {AxiosResponse} from "axios";
 import {ClipLoader} from "react-spinners";
 import Leaderboard from "./Leaderboard";
@@ -12,13 +12,8 @@ function Analytics(): JSX.Element {
 
 
 
-    useEffect(() => {
-        if (loading) {
-            fetchLeaderboard();
-        }
-    }, [loading, leaderboard]);
 
-    const fetchLeaderboard = () => {
+    const fetchLeaderboard = useCallback(() => {
         axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
             setTotalVotes(response.data[0][0])
             setLeaderboard(response.data.slice(1))
@@ -27,10 +22,15 @@ function Analytics(): JSX.Element {
                 setLoading(false);
             }, 325);
         });
-    }
+    }, [totalVotes]);
 
 
 
+    useEffect(() => {
+        if (loading) {
+            fetchLeaderboard();
+        }
+    }, [loading, leaderboard, fetchLeaderboard]);
 
 
     useEffect(() => {
@@ -43,7 +43,7 @@ function Analytics(): JSX.Element {
             clearInterval(updateTimer);
         }
 
-    }, []);
+    }, [fetchLeaderboard]);
 
 
     return (
