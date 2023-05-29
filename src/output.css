@@ -686,11 +686,6 @@ video {
           animation: better-fade-in 0.5s linear;
 }
 
-.animate-better-spin{
-  -webkit-animation: spin 0.5s linear;
-          animation: spin 0.5s linear;
-}
-
 .cursor-not-allowed{
   cursor: not-allowed;
 }
@@ -948,10 +943,6 @@ video {
 
 .duration-700{
   transition-duration: 700ms;
-}
-
-.ease-in-out{
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
