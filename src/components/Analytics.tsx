@@ -70,9 +70,9 @@ function Analytics(): JSX.Element {
                             <Fragment>
                                 <h1>Hourly</h1>
 
-                                <Graph data={analytics?.hourly}></Graph>
+                                <Graph data={analytics?.hourly.reverse()}></Graph>
                                 <h1>Daily</h1>
-                                <Graph data={analytics?.daily}></Graph>
+                                <Graph data={analytics?.daily.reverse()}></Graph>
                             </Fragment>
                         ) : <ClipLoader color={"white"} size={"50"}/>}
                     </div>
