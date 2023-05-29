@@ -24,7 +24,7 @@ function Graph(props: GraphProps): JSX.Element {
                     margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
 
                     <Tooltip cursor={false} content={<CustomTooltip/>} position={{x: 0, y: 0}}/>
-                    <Area type="monotone" dataKey="votes" stroke="#5865f2" fill="#5865f2" fillOpacity={0.35}/>
+                    <Area  type="monotone" dataKey="votes" stroke="#5865f2" fill="#5865f2" fillOpacity={0.35}/>
                     <YAxis hide={true} domain={[0, props.data[props.data.length-1] === undefined ? 0 : props.data[props.data.length-1].votes * 1.25]}></YAxis>
                 </AreaChart>
             </ResponsiveContainer>
