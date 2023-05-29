@@ -20,7 +20,7 @@ function Analytics(): JSX.Element {
         axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
             setLeaderboard(response.data.slice(1))
 
-            axios.get("http://localhost:8080/rankings/analytics").then(function (response: AxiosResponse<IAnalytics>) {
+            axios.get("https://rankings-tv51.onrender.com/rankings/analytics").then(function (response: AxiosResponse<IAnalytics>) {
                 setAnalyticData(response.data)
 
                 setTimeout(() => {
