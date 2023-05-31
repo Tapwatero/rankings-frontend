@@ -13,15 +13,15 @@ function Leaderboard(props: LeaderboardProps): JSX.Element {
     // }
 
     let data = props.leaderboard.map((leaderboardPosition: string[], index: number) =>
-        <div key={index} className={`hover:bg-slate-600 grid grid-cols-3 duration-300`}>
-            <h1 className={"flex items-center justify-center text-xs"}>{index+1}</h1>
-            <h1 className={"flex items-center justify-center text-xs"}>{leaderboardPosition[0]}</h1>
-            <h1 className={"flex items-center justify-center text-xs"}>{leaderboardPosition[1]}</h1>
+        <div key={index} className={`hover:bg-slate-600 grid grid-cols-3 duration-300 text-sm`}>
+            <h1 className={"flex items-center justify-center"}>{index+1}</h1>
+            <h1 className={"flex items-center justify-center"}>{leaderboardPosition[0]}</h1>
+            <h1 className={"flex items-center justify-center"}>{leaderboardPosition[1]}</h1>
         </div>
 )
 
     return (
-        <div className={"border-slate-400 border-r / divide-y divide-slate-500 w-full h-full text-center grid grid-rows-10  bg-slate-700 text-white text-3xl font-['Proxima_Nova']"}>
+        <div className={"min-h-screen w-full border-slate-400 border-r / divide-y divide-slate-500 text-center grid grid-rows-10  bg-slate-700 text-white text-3xl font-['Proxima_Nova']"}>
             {data}
         </div>
     )
