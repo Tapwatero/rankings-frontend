@@ -1,5 +1,5 @@
-import React, {Fragment} from "react";
-import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import React from "react";
+import {Area, AreaChart, ResponsiveContainer, Tooltip, YAxis} from "recharts";
 import CustomTooltip from "./CustomTooltip";
 import {IAnalytics} from "./Analytics";
 

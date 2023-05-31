@@ -1,11 +1,10 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios, {AxiosResponse} from "axios";
 import {ClipLoader} from "react-spinners";
 import Leaderboard from "./Leaderboard";
 import Graph, {DataPoint} from "./Graph";
 import GraphToggle from './GraphToggle';
 import VoteCount from "./VoteCount";
-import Vote from "../Vote";
 
 
 export interface IAnalytics {
