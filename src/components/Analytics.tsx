@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {Fragment, useCallback, useEffect, useState} from 'react';
 import axios, {AxiosResponse} from "axios";
 import {ClipLoader} from "react-spinners";
 import Leaderboard from "./Leaderboard";
@@ -8,6 +8,7 @@ import VoteCount from "./VoteCount";
 
 
 export interface IAnalytics {
+    quick_status?: { votes: number },
     hourly: DataPoint[],
     daily: DataPoint[],
 }
@@ -21,14 +22,11 @@ function Analytics(): JSX.Element {
 
     const fetchAnalytics = useCallback(() => {
         axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
-            setLeaderboard(response.data.slice(1))
+            setLeaderboard(response.data)
 
             axios.get("https://rankings-tv51.onrender.com/rankings/analytics").then(function (response: AxiosResponse<IAnalytics>) {
                 setAnalytics(response.data)
-
-                setTimeout(() => {
-                    setLoading(false)
-                }, 325);
+                setLoading(false)
 
             });
 
@@ -46,7 +44,7 @@ function Analytics(): JSX.Element {
 
         let updateTimer = setInterval(() => {
             fetchAnalytics();
-        }, 2500);
+        }, 1250);
 
         return () => {
             clearInterval(updateTimer);
@@ -59,31 +57,35 @@ function Analytics(): JSX.Element {
         setGraphPeriod(option);
     }
 
+
     return (
-        !loading ? (
+        <div className={"w-screen min-h-fit bg-slate-800 overflow-scroll"}>
 
-            <div className={"w-screen min-h-fit bg-slate-800 overflow-scroll"}>
-
-                <div className={"justify-center items-center w-full h-full flex flex-col lg:flex-row gap-y-12"}>
+            <div className={"justify-center items-center w-full h-full flex flex-col lg:flex-row gap-y-12"}>
 
 
-                    <Leaderboard leaderboard={leaderboard}></Leaderboard>
+                {!loading && analytics?.quick_status !== undefined && analytics?.hourly !== undefined && analytics?.daily !== undefined ? (
+                        <Fragment>
+                            <Leaderboard leaderboard={leaderboard}></Leaderboard>
 
+                            <div
+                                className={"mx-16 w-11/12 md:w-7/12 xl:w-9/12 bg-slate-800 h-screen flex justify-center items-center flex-col gap-y-8 text-lg text-white font-['Questrial']"}>
+                                <VoteCount count={analytics.quick_status.votes}></VoteCount>
+                                <hr className={"bg-white w-full"}></hr>
+                                <Graph data={analytics} selectedPeriod={graphPeriod}></Graph>
+                                <GraphToggle keys={Object.keys(analytics).slice(1)}
+                                             handleSelection={handleSelection}></GraphToggle>
+                            </div>
 
-                    {!(analytics?.hourly === undefined && analytics?.daily === undefined) ? (
-                        <div
-                            className={"mx-16 w-11/12 md:w-7/12 xl:w-9/12 bg-slate-800 h-screen flex justify-center items-center flex-col gap-y-8 text-lg text-white font-['Questrial']"}>
-                            <VoteCount count={analytics.hourly[analytics.hourly.length-1].votes}></VoteCount>
-                            <GraphToggle keys={Object.keys(analytics)} handleSelection={handleSelection}></GraphToggle>
-                            <Graph data={analytics} selectedPeriod={graphPeriod}></Graph>
-                        </div>
-                    ) : <ClipLoader color={"white"} size={"50"}/>}
-                </div>
+                        </Fragment>
+                    ) :
+                    <div className={"h-screen flex justify-center items-center"}>
+                        <ClipLoader color={"white"} size={150}/>
+                    </div>
+                }
             </div>
-        ) : (
-            <div className={"h-screen w-screen flex justify-center items-center"}>
-                <ClipLoader color={"#6495ED"} size={200}></ClipLoader>
-            </div>
-        ));
+        </div>
+    )
 }
+
 export default Analytics;

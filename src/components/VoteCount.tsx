@@ -1,14 +1,35 @@
-import React from "react";
-
+import React, {useEffect} from "react";
+import {useCountUp} from "react-countup";
 
 
 interface IVoteCountProps {
     count: number,
 }
 
+
 function VoteCount(props: IVoteCountProps): JSX.Element {
+    const countUpRef = React.useRef(null);
+
+
+    const {update} = useCountUp({
+        ref: countUpRef,
+        start: 0,
+        end: 0,
+        delay: 0,
+        duration: 0.5,
+    });
+
+
+    useEffect(() => {
+        update(props.count);
+    }, [props.count, update]);
+
     return (
-        <h1 className={"bg-slate-700 px-10 py-5 text-2xl text-white mb-16 rounded-xl cursor-pointer hover:opacity-75 duration-500"}>{props.count} Votes</h1>
+        <div
+            className={"select-none gap-1 flex flex-row text-2xl bg-slate-700 px-6 py-2 rounded-full hover:opacity-75 duration-500 cursor-pointer"}>
+            <span>Votes:</span>
+            <span ref={countUpRef}/>
+        </div>
     )
 }
 
