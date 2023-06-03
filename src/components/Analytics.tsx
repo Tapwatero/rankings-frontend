@@ -58,7 +58,7 @@ function Analytics(): JSX.Element {
 
 
     return (
-        <div className={"w-screen min-h-fit bg-slate-800 overflow-scroll"}>
+        <div className={"w-screen min-h-fit bg-slate-800 overflow-scroll lg:overflow-hidden"}>
 
             <div className={"justify-center items-center w-full h-full flex flex-col lg:flex-row"}>
 
