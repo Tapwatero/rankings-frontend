@@ -1,36 +1,35 @@
 import React, {Fragment, useCallback, useEffect, useState} from 'react';
 import axios, {AxiosResponse} from "axios";
 import {ClipLoader} from "react-spinners";
-import Leaderboard from "./Leaderboard";
+import Leaderboard, {ILeaderboardEntry} from "./Leaderboard";
 import Graph, {DataPoint} from "./Graph";
 import GraphToggle from './GraphToggle';
 import VoteCount from "./VoteCount";
 
 
 export interface IAnalytics {
-    quick_status?: { votes: number },
-    hourly: DataPoint[],
-    daily: DataPoint[],
+    summary: { total_votes: number, leaderboard: ILeaderboardEntry[]},
+    historic_votes: {
+        hourly: DataPoint[],
+        daily: DataPoint[],
+    }
 }
 
 function Analytics(): JSX.Element {
-    const [leaderboard, setLeaderboard] = useState<string[][]>([[""]]);
+    const [leaderboard, setLeaderboard] = useState<ILeaderboardEntry[]>([{name: "", votes: 0}]);
     const [loading, setLoading] = useState<boolean>(true);
     const [analytics, setAnalytics] = useState<IAnalytics>();
     const [graphPeriod, setGraphPeriod] = useState<String>("hourly");
 
 
     const fetchAnalytics = useCallback(() => {
-        axios.get("https://rankings-tv51.onrender.com/rankings/leaderboard").then(function (response: AxiosResponse<string[][]>) {
-            setLeaderboard(response.data)
 
             axios.get("https://rankings-tv51.onrender.com/rankings/analytics").then(function (response: AxiosResponse<IAnalytics>) {
-                setAnalytics(response.data)
-                setLoading(false)
-
+                setLeaderboard(response.data.summary?.leaderboard);
+                setAnalytics(response.data);
+                setLoading(false);
             });
 
-        });
     }, []);
 
 
@@ -61,20 +60,19 @@ function Analytics(): JSX.Element {
     return (
         <div className={"w-screen min-h-fit bg-slate-800 overflow-scroll"}>
 
-            <div className={"justify-center items-center w-full h-full flex flex-col lg:flex-row gap-y-12"}>
+            <div className={"justify-center items-center w-full h-full flex flex-col lg:flex-row"}>
 
 
-                {!loading && analytics?.quick_status !== undefined && analytics?.hourly !== undefined && analytics?.daily !== undefined ? (
+                {!loading && analytics?.summary !== undefined && analytics?.historic_votes.hourly !== undefined && analytics?.historic_votes.daily !== undefined ? (
                         <Fragment>
                             <Leaderboard leaderboard={leaderboard}></Leaderboard>
 
-                            <div
-                                className={"mx-16 w-11/12 md:w-7/12 xl:w-9/12 bg-slate-800 h-screen flex justify-center items-center flex-col gap-y-8 text-lg text-white font-['Questrial']"}>
-                                <VoteCount count={analytics.quick_status.votes}></VoteCount>
+                            <div className={"mx-16 w-11/12 md:w-7/12 xl:w-9/12 bg-slate-800 h-screen flex justify-center items-center flex-col gap-y-8 text-lg text-white font-['Questrial']"}>
+
+                                <VoteCount count={analytics.summary.total_votes}></VoteCount>
                                 <hr className={"bg-white w-full"}></hr>
-                                <Graph data={analytics} selectedPeriod={graphPeriod}></Graph>
-                                <GraphToggle keys={Object.keys(analytics).slice(1)}
-                                             handleSelection={handleSelection}></GraphToggle>
+                                <Graph data={analytics.historic_votes} selectedPeriod={graphPeriod}></Graph>
+                                <GraphToggle keys={Object.keys(analytics.historic_votes)} handleSelection={handleSelection}></GraphToggle>
                             </div>
 
                         </Fragment>

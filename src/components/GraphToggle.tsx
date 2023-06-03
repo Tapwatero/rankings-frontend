@@ -19,7 +19,7 @@ function GraphToggle(props: IGraphToggleProps): JSX.Element {
 
 
     let options = props.keys.map((key) => (
-        <div onClick={() => handleClick(key)} key={key + ""} className={`${selected === key ? 'bg-blue-600' : 'bg-slate-600'} select-none hover:opacity-75 border-none capitalize duration-1000 rounded-md cursor-pointer px-5 py-1 flex justify-center items-center`}>{key}</div>
+        <div onClick={() => handleClick(key)} key={key + ""} className={`${selected === key ? 'bg-blue-600' : 'bg-slate-600'} select-none hover:opacity-75 border-none capitalize duration-700 rounded-full cursor-pointer px-10 py-1.5 flex justify-center items-center`}>{key}</div>
     ));
 
     return (

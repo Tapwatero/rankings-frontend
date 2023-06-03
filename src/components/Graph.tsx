@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Area, AreaChart, ResponsiveContainer, Tooltip, YAxis} from "recharts";
 import CustomTooltip from "./CustomTooltip";
-import {IAnalytics} from "./Analytics";
 
 
 
 
 interface IGraphProps {
-    data: IAnalytics,
+    data: {[key: string]: DataPoint[]},
     selectedPeriod: String,
 }
 
@@ -20,9 +19,7 @@ function Graph(props: IGraphProps): JSX.Element {
     const [selectedData, setSelectedData] = useState<any>(true);
 
     useEffect(() => {
-        if (props.selectedPeriod !== "quick_status") {
-            setSelectedData(props.data[props.selectedPeriod as keyof typeof props.data]);
-        }
+        setSelectedData(props.data[props.selectedPeriod as keyof typeof props.data]);
     }, [props, setSelectedData]);
 
 
