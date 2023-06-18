@@ -4,7 +4,7 @@ import React from "react";
 
 
 export interface ILeaderboardEntry {
-    name: string,
+    entry: string,
     votes: number,
 }
 
@@ -17,7 +17,7 @@ function Leaderboard(props: LeaderboardProps): JSX.Element {
     let data = props.leaderboard.map((leaderboardEntry: ILeaderboardEntry, index: number) =>
         <div key={index} className={`select-none cursor-pointer hover:bg-slate-800 grid grid-cols-3 duration-300 text-sm`}>
             <h1 className={"flex items-center justify-center"}>{index+1}</h1>
-            <h1 className={"flex items-center justify-center"}>{leaderboardEntry.name}</h1>
+            <h1 className={"flex items-center justify-center"}>{leaderboardEntry.entry}</h1>
             <h1 className={"flex items-center justify-center"}>{leaderboardEntry.votes}</h1>
         </div>
 )

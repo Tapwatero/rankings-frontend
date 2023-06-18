@@ -11,8 +11,8 @@ interface IGraphProps {
 }
 
 export interface DataPoint {
-    votes: number;
-    time: string;
+    total_votes: number;
+    timestamp: string;
 }
 
 function Graph(props: IGraphProps): JSX.Element {
@@ -20,7 +20,11 @@ function Graph(props: IGraphProps): JSX.Element {
 
     useEffect(() => {
         setSelectedData(props.data[props.selectedPeriod as keyof typeof props.data]);
-    }, [props, setSelectedData]);
+        console.log(selectedData);
+        if (selectedData[selectedData.length] !== undefined) {
+            console.log(selectedData[selectedData.length-1].total_votes );
+        }
+    }, [props, selectedData, selectedData.data, setSelectedData]);
 
 
 
@@ -32,8 +36,8 @@ function Graph(props: IGraphProps): JSX.Element {
 
                 <Tooltip cursor={false} content={<CustomTooltip/>} position={{x: 0, y: 0}}/>
 
-                <Area  type="monotone" dataKey="votes" stroke="#5865f2" fill="#5865f2" fillOpacity={0.35}/>
-                <YAxis hide={true} domain={[0, selectedData[selectedData.length-1] === undefined ? 0 : selectedData[selectedData.length-1].votes * 1.25]}></YAxis>
+                <Area  type="monotone" dataKey="total_votes" stroke="#5865f2" fill="#5865f2" fillOpacity={0.35}/>
+                <YAxis hide={true} domain={[0, selectedData[selectedData.length-1] === undefined ? 0 : selectedData[selectedData.length-1].total_votes * 1.25]}></YAxis>
             </AreaChart>
         </ResponsiveContainer>
     )

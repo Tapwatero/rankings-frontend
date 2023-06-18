@@ -1,14 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
 import {TypeAnimation} from "react-type-animation";
 import {Link} from "react-router-dom";
+import RankingContext from "./RankingContext";
 
 function VotePrompt() {
+    const { id, topic } = useContext(RankingContext);
 
     return (
-        <Link to={"/analytics"} className={"p-3"}>
+        <Link to={`/ranking/${id}/analytics`} className={"p-3"}>
             <TypeAnimation
                 sequence={[
-                    'Current Vote - Best Rizz',
+                    `Current Vote - ${topic}`,
                     1000,
                 ]}
                 speed={25}

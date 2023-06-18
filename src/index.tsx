@@ -4,7 +4,8 @@ import './input.css';
 import "./output.css";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Analytics from './components/Analytics';
-import Vote from "./Vote";
+import Ranking from "./components/Ranking";
+import LandingPage from "./components/LandingPage";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,8 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter>
         <Routes>
-            <Route path={"/"} element={<Vote/>}></Route>
-            <Route path={"/analytics"} element={<Analytics/>}></Route>
+            <Route path={"/"} element={<LandingPage/>}></Route>
+            <Route path={"/ranking/:id"} element={<Ranking/>}></Route>
+            <Route path={"/ranking/:id/analytics/"} element={<Analytics/>}></Route>
         </Routes>
     </BrowserRouter>
 );

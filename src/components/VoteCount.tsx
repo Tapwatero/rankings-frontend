@@ -26,7 +26,7 @@ function VoteCount(props: IVoteCountProps): JSX.Element {
 
     return (
         <div
-            className={"select-none gap-1 flex flex-row text-2xl bg-slate-700 px-8 py-3 rounded-xl hover:opacity-75 duration-500 cursor-pointer"}>
+            className={"select-none gap-1 flex flex-row text-2xl bg-slate-700 px-14 py-4 rounded-full hover:opacity-75 duration-500 cursor-pointer"}>
             <span>Votes:</span>
             <span ref={countUpRef}/>
         </div>

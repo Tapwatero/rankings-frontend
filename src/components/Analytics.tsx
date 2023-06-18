@@ -5,6 +5,7 @@ import Leaderboard, {ILeaderboardEntry} from "./Leaderboard";
 import Graph, {DataPoint} from "./Graph";
 import GraphToggle from './GraphToggle';
 import VoteCount from "./VoteCount";
+import {useParams} from "react-router-dom";
 
 
 export interface IAnalytics {
@@ -16,21 +17,23 @@ export interface IAnalytics {
 }
 
 function Analytics(): JSX.Element {
-    const [leaderboard, setLeaderboard] = useState<ILeaderboardEntry[]>([{name: "", votes: 0}]);
+    const [leaderboard, setLeaderboard] = useState<ILeaderboardEntry[]>([{entry: "", votes: 0}]);
     const [loading, setLoading] = useState<boolean>(true);
     const [analytics, setAnalytics] = useState<IAnalytics>();
     const [graphPeriod, setGraphPeriod] = useState<String>("hourly");
 
+    const { id } = useParams();
+
 
     const fetchAnalytics = useCallback(() => {
 
-            axios.get("https://rankings-tv51.onrender.com/rankings/analytics").then(function (response: AxiosResponse<IAnalytics>) {
+            axios.get(`http://localhost:8080/rankings/${id}/analytics`).then(function (response: AxiosResponse<IAnalytics>) {
                 setLeaderboard(response.data.summary?.leaderboard);
                 setAnalytics(response.data);
                 setLoading(false);
             });
 
-    }, []);
+    }, [id]);
 
 
     // Get analytics upon loading
@@ -70,7 +73,7 @@ function Analytics(): JSX.Element {
                             <div className={"mx-16 w-11/12 md:w-7/12 xl:w-9/12 bg-slate-800 h-screen flex justify-center items-center flex-col gap-y-8 text-lg text-white font-['Questrial']"}>
 
                                 <VoteCount count={analytics.summary.total_votes}></VoteCount>
-                                <hr className={"bg-white w-full"}></hr>
+                                <hr className={"bg-white w-full rounded-full"}></hr>
                                 <Graph data={analytics.historic_votes} selectedPeriod={graphPeriod}></Graph>
                                 <GraphToggle keys={Object.keys(analytics.historic_votes)} handleSelection={handleSelection}></GraphToggle>
                             </div>
