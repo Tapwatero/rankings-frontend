@@ -27,7 +27,7 @@ function Ranking(): JSX.Element {
 
 
     const getMatchups = useCallback(() => {
-        axios.get(`https://rankings-tv51.onrender.comw/rankings/${id}`).then(function (response: AxiosResponse<IRanking>) {
+        axios.get(`https://rankings-tv51.onrender.com/rankings/${id}`).then(function (response: AxiosResponse<IRanking>) {
             setMatchups(arrayShuffle(generateMatchups(response.data.entries)));
             setTopic(response.data.topic);
             setIndex(0);
