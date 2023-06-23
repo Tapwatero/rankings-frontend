@@ -16,3 +16,8 @@ html {
     width: 0;
     background: transparent; /* make scrollbar transparent */
 }
+
+
+.right-35\/2 {
+    right: 17.5%;
+}

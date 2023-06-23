@@ -27,7 +27,7 @@ function Ranking(): JSX.Element {
 
 
     const getMatchups = useCallback(() => {
-        axios.get(`http://localhost:8080/rankings/${id}`).then(function (response: AxiosResponse<IRanking>) {
+        axios.get(`https://rankings-tv51.onrender.comw/rankings/${id}`).then(function (response: AxiosResponse<IRanking>) {
             setMatchups(arrayShuffle(generateMatchups(response.data.entries)));
             setTopic(response.data.topic);
             setIndex(0);
@@ -48,7 +48,7 @@ function Ranking(): JSX.Element {
     }, [index, matchups]);
 
     const handleVote = (matchupID: number) => {
-        axios.post(`http://localhost:8080/rankings/${id}/vote`, { entry: matchup[matchupID]});
+        axios.post(`https://rankings-tv51.onrender.com/rankings/${id}/vote`, { entry: matchup[matchupID]});
 
         if (matchups) {
             setIndex(matchups[index + 1] !== undefined ? index + 1 : index);

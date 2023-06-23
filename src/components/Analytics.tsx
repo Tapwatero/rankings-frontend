@@ -27,7 +27,7 @@ function Analytics(): JSX.Element {
 
     const fetchAnalytics = useCallback(() => {
 
-            axios.get(`http://localhost:8080/rankings/${id}/analytics`).then(function (response: AxiosResponse<IAnalytics>) {
+            axios.get(`https://rankings-tv51.onrender.com/rankings/${id}/analytics`).then(function (response: AxiosResponse<IAnalytics>) {
                 setLeaderboard(response.data.summary?.leaderboard);
                 setAnalytics(response.data);
                 setLoading(false);

@@ -7,6 +7,9 @@ module.exports = {
         'better-fade-in': 'better-fade-in 0.5s linear',
         'fast-spin': 'spin 0.35s linear infinite',
       },
+      width: {
+        '7/25': '28%'
+      },
       keyframes: {
         "better-fade-in": {
           '100%': { opacity: 1 },
